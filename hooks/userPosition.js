@@ -25,4 +25,5 @@ export function userPosition () { //entire function from Claude
     return position
 }
 
+
      

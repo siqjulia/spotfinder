@@ -1,38 +1,59 @@
-import { useEffect, useState } from 'react'
-import { View, Text, StyleSheet} from 'react-native'
-import { supabase } from '../supabase'
-import { userPosition } from '../hooks/userPosition'
- 
-export default function DashboardScreen () { 
-    const [spots, setSpots] = useState([])
-    const position = userPosition()
-  
-      useEffect(() => { // lines 11-38 are from Claude, they were handtyped and then copied from app.js to here. 
-        async function loadSpots () { 
-          const { data, error } = await supabase
-          .from ('spots')
-          .select('*')
-          .eq('is_vacant', true) // this will only show the user what I edit as open in supabase rn 
-  
-  
-          if (error) console.error(error)
-            else setSpots(data)
-            console.log(data)
-        }
-        loadSpots ()
-      }, [])
-  
+import { useEffect, useState } from "react";
+import { View, Text, StyleSheet } from "react-native";
+import { supabase } from "../supabase";
+import { userPosition } from "../hooks/userPosition";
+import { useNavigation } from "@react-navigation/native";
+import { Pressable } from "react-native"; 
+
+
+
+export default function DashboardScreen() {
+  const position = userPosition();
+  const navigation = useNavigation();
+  console.log("position:", position);
+
+  useEffect(() => {
+    async function saveSpot() {
+      console.log("running saveSpot", position);
+      try {
+        const { error } = await supabase
+          .from("savedlocation")
+          .update({
+            username: "julia1",
+
+            location: `POINT(${position.lat} ${position.lng})`,
+          })
+          .eq("id", 7);
+        if (error) console.error(error);
+      } catch (err) {
+        console.log(err);
+      }
+    }
+    saveSpot();
+  }, []);
+
   return (
-    <View style ={styles.container}>
-      <Text> My location: {position ? `${position.lat}, ${position.lng}` : 'Getting location...'} </Text>
-      {spots.map(spot => (
-        <Text key={spot.id}>{spot.lot_name} - Spot {spot.spot_num}</Text>
-        ))}
-    </View>
-  )
-  }
-  
-  const styles = StyleSheet.create({
-    container: { flex: 1, padding: 20, marginTop: 60}
-  })
-  
+    // lines 26-38 are from Claude, they were handtyped and then copied from app.js to here.
+    <View style={styles.container}>
+      <Text>
+        {" "}
+        My location:{" "}
+        {position
+          ? `${position.lat}, ${position.lng}`
+          : "Getting location..."}{" "}
+      </Text>
+
+          <Pressable onPress={() => navigation.navigate("Register")}>
+            <Text>Register</Text>
+          </Pressable>
+
+          <Pressable onPress={() => navigation.navigate("Login")}>
+            <Text>Login</Text>
+          </Pressable>
+    </View>   
+  );
+}
+
+const styles = StyleSheet.create({
+  container: { flex: 1, padding: 20, marginTop: 60 },
+});
