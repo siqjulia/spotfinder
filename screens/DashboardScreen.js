@@ -5,8 +5,6 @@ import { userPosition } from "../hooks/userPosition";
 import { useNavigation } from "@react-navigation/native";
 import { Pressable } from "react-native"; 
 
-
-
 export default function DashboardScreen() {
   const position = userPosition();
   const navigation = useNavigation();
@@ -19,11 +17,11 @@ export default function DashboardScreen() {
         const { error } = await supabase
           .from("savedlocation")
           .update({
-            username: "julia1",
-
+            user_id: user.id,
+            username: user.email,
             location: `POINT(${position.lat} ${position.lng})`,
           })
-          .eq("id", 7);
+    
         if (error) console.error(error);
       } catch (err) {
         console.log(err);
@@ -35,6 +33,15 @@ export default function DashboardScreen() {
   return (
     // lines 26-38 are from Claude, they were handtyped and then copied from app.js to here.
     <View style={styles.container}>
+      
+      <Pressable onPress={() => navigation.navigate("Register")}>
+            <Text>Register</Text>
+          </Pressable>
+
+          <Pressable onPress={() => navigation.navigate("Login")}>
+            <Text>Login</Text>
+          </Pressable>
+      
       <Text>
         {" "}
         My location:{" "}
@@ -42,14 +49,6 @@ export default function DashboardScreen() {
           ? `${position.lat}, ${position.lng}`
           : "Getting location..."}{" "}
       </Text>
-
-          <Pressable onPress={() => navigation.navigate("Register")}>
-            <Text>Register</Text>
-          </Pressable>
-
-          <Pressable onPress={() => navigation.navigate("Login")}>
-            <Text>Login</Text>
-          </Pressable>
     </View>   
   );
 }
