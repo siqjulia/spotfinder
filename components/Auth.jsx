@@ -16,9 +16,11 @@ export default function Auth() {
       password: password,
     })
 
-    if (error) Alert.alert(error.message)
-    setLoading(false)
+    if (error) { 
+      Alert.alert(error.message)
+      setLoading(false)
   }
+ }
 
   async function signUpWithEmail() {
     setLoading(true)

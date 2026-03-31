@@ -33,10 +33,6 @@ export default function DashboardScreen() {
   return (
     // lines 26-38 are from Claude, they were handtyped and then copied from app.js to here.
     <View style={styles.container}>
-      
-      <Pressable onPress={() => navigation.navigate("Register")}>
-            <Text>Register</Text>
-          </Pressable>
 
           <Pressable onPress={() => navigation.navigate("Login")}>
             <Text>Login</Text>
