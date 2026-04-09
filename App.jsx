@@ -1,18 +1,16 @@
 import 'react-native-url-polyfill/auto'
 import { useState, useEffect } from 'react'
-import { supabase } from "./supabase";
+import { supabase } from './supabase'
 import Auth from './components/Auth'
 import Account from './components/Accounts'
-import { NavigationContainer } from '@react-navigation/native' 
 import { createStackNavigator } from '@react-navigation/stack'
-import DashboardScreen from './screens/DashboardScreen'
-
+import { NavigationContainer } from '@react-navigation/native'
 
 const Stack = createStackNavigator()
 
 export default function App() {
-  const [userId, setUserId] = useState(null)
-  const [email, setEmail] = useState(undefined)
+  const [userId, setUserId] = useState<string | null>(null)
+  const [email, setEmail] = useState<string | undefined>(undefined)
 
   useEffect(() => {
     supabase.auth.getClaims().then(({ data: { claims } }) => {
@@ -34,23 +32,22 @@ export default function App() {
         setEmail(undefined)
       }
     })
-    return () => listener.subscription.unsubscribe() //lines 46-65 are code I wrote from claude, and then asked it to help me fit my existing code into the Supabase doc code. 
   }, [])
 
-return (
-<NavigationContainer> 
-    <Stack.Navigator>
-      {userId ? (
-        <>
-        <Stack.Screen name="Dashboard" component={DashboardScreen} />
-        <Stack.Screen name="Account"> 
-          {() => <Account key={userId} userId={userId} email={email} />}
-        </Stack.Screen>
-        </>
-      ) : (
-        <Stack.Screen name="Login" component={Auth} />
-      )}
-    </Stack.Navigator>
-    </NavigationContainer>
+  return ( 
+      <NavigationContainer> 
+          <Stack.Navigator>
+            {userId ? (
+              <>
+              <Stack.Screen name="Dashboard" component={DashboardScreen} />
+              <Stack.Screen name="Account"> 
+                {() => <Account key={userId} userId={userId} email={email} />}
+              </Stack.Screen>
+              </>
+            ) : (
+              <Stack.Screen name="Login" component={Auth} />
+            )}
+          </Stack.Navigator>
+          </NavigationContainer>
   )
-} 
+}

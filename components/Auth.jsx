@@ -1,3 +1,4 @@
+//* Updated with code from this tutorial, had code from other tutorial mixed up: https://supabase.com/docs/guides/getting-started/tutorials/with-expo-react-native?queryGroups=database-method&database-method=sql&queryGroups=auth-store&auth-store=secure-store
 import React, { useState } from 'react'
 import { Alert, StyleSheet, View } from 'react-native'
 import { supabase } from '../supabase'

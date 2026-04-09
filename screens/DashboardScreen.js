@@ -33,8 +33,8 @@ export default function DashboardScreen() {
     // lines 26-38 are from Claude, they were handtyped and then copied from app.js to here.
     <View style={styles.container}>
 
-          <Pressable onPress={() => navigation.navigate("Login")}>
-            <Text>Login</Text>
+          <Pressable onPress={() => supabase.auth.signOut()}>
+            <Text>Sign Out</Text>
           </Pressable>
       
       <Text>
