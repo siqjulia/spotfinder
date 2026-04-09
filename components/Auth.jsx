@@ -1,8 +1,7 @@
-//copied from https://supabase.com/docs/guides/auth/quickstarts/react-native
-
 import React, { useState } from 'react'
-import { Alert, StyleSheet, View, Text, TextInput, TouchableOpacity } from 'react-native'
+import { Alert, StyleSheet, View } from 'react-native'
 import { supabase } from '../supabase'
+import { Button, Input } from '@rneui/themed'
 
 export default function Auth() {
   const [email, setEmail] = useState('')
@@ -11,72 +10,55 @@ export default function Auth() {
 
   async function signInWithEmail() {
     setLoading(true)
+    console.log({ email, password })
     const { error } = await supabase.auth.signInWithPassword({
       email: email,
       password: password,
     })
 
-    if (error) { 
-      Alert.alert(error.message)
-      setLoading(false)
+    if (error) Alert.alert(error.message)
+    setLoading(false)
   }
- }
 
   async function signUpWithEmail() {
     setLoading(true)
-    const {
-      data: { session },
-      error,
-    } = await supabase.auth.signUp({
+    const { error } = await supabase.auth.signUp({
       email: email,
       password: password,
     })
 
     if (error) Alert.alert(error.message)
-    if (!session) Alert.alert('Please check your inbox for email verification!')
     setLoading(false)
   }
 
   return (
-    <View style={styles.container}>
+    <View>
       <View style={[styles.verticallySpaced, styles.mt20]}>
-        <Text style={styles.label}>Email</Text>
-        <TextInput
+        <Input
+          label="Email"
+          leftIcon={{ type: 'font-awesome', name: 'envelope' }}
           onChangeText={(text) => setEmail(text)}
           value={email}
           placeholder="email@address.com"
-          autoCapitalize="none"
-          style={styles.input}
+          autoCapitalize={'none'}
         />
       </View>
       <View style={styles.verticallySpaced}>
-        <Text style={styles.label}>Password</Text>
-        <TextInput
+        <Input
+          label="Password"
+          leftIcon={{ type: 'font-awesome', name: 'lock' }}
           onChangeText={(text) => setPassword(text)}
           value={password}
           secureTextEntry={true}
           placeholder="Password"
-          autoCapitalize="none"
-          style={styles.input}
+          autoCapitalize={'none'}
         />
       </View>
       <View style={[styles.verticallySpaced, styles.mt20]}>
-        <TouchableOpacity
-          style={[styles.button, loading && styles.buttonDisabled]}
-          onPress={() => signInWithEmail()}
-          disabled={loading}
-        >
-          <Text style={styles.buttonText}>Sign in</Text>
-        </TouchableOpacity>
+        <Button title="Sign in" disabled={loading} onPress={() => signInWithEmail()} />
       </View>
       <View style={styles.verticallySpaced}>
-        <TouchableOpacity
-          style={[styles.button, loading && styles.buttonDisabled]}
-          onPress={() => signUpWithEmail()}
-          disabled={loading}
-        >
-          <Text style={styles.buttonText}>Sign up</Text>
-        </TouchableOpacity>
+        <Button title="Sign up" disabled={loading} onPress={() => signUpWithEmail()} />
       </View>
     </View>
   )
@@ -94,32 +76,5 @@ const styles = StyleSheet.create({
   },
   mt20: {
     marginTop: 20,
-  },
-  label: {
-    fontSize: 16,
-    fontWeight: '600',
-    color: '#86939e',
-    marginBottom: 6,
-  },
-  input: {
-    borderWidth: 1,
-    borderColor: '#86939e',
-    borderRadius: 4,
-    padding: 12,
-    fontSize: 16,
-  },
-  button: {
-    backgroundColor: '#2089dc',
-    borderRadius: 4,
-    padding: 12,
-    alignItems: 'center',
-  },
-  buttonDisabled: {
-    opacity: 0.5,
-  },
-  buttonText: {
-    color: '#fff',
-    fontSize: 16,
-    fontWeight: '600',
   },
 })

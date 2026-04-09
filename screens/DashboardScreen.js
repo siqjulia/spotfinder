@@ -11,14 +11,13 @@ export default function DashboardScreen() {
   console.log("position:", position);
 
   useEffect(() => {
-    async function saveSpot() {
+    async function saveSpot() { // this is running like every second. does that need to happen if we're just saving one parking spot at a time? 
       console.log("running saveSpot", position);
       try {
         const { error } = await supabase
           .from("savedlocation")
           .update({
-            user_id: user.id,
-            username: user.email,
+            user_id,
             location: `POINT(${position.lat} ${position.lng})`,
           })
     
