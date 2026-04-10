@@ -8,19 +8,22 @@ import { Pressable } from "react-native";
 export default function DashboardScreen() {
   const position = userPosition();
   const navigation = useNavigation();
-  console.log("position:", position);
+  // console.log("position:", position);
+  // JULIA: WHY IS THIS FUNCTION RUNNING EVERY SECOND?
 
   useEffect(() => {
     async function saveSpot() {
-      console.log("running saveSpot", position);
       try {
+      console.log("running saveSpot", position);
+      // console.log("user", user);
         const { error } = await supabase
           .from("savedlocation")
           .update({
-            user_id: user.id,
-            username: user.email,
+            // username: "hello",
             location: `POINT(${position.lat} ${position.lng})`,
+            updated: `now()`
           })
+          .eq('id', 7)
     
         if (error) console.error(error);
       } catch (err) {
