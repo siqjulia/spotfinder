@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { supabase } from "../supabase";
 import { StyleSheet, View, Alert } from "react-native";
 import { Button, Input } from "@rneui/themed";
-import Avatar from "./Avatar";
+// import Avatar from "./Avatar";
 
 export default function Account(userId, email) {
   const [loading, setLoading] = useState(true);
@@ -70,14 +70,14 @@ export default function Account(userId, email) {
   return (
     <View>
       <View>
-        <Avatar
+        {/* <Avatar
           size={200}
           url={avatarUrl}
           onUpload={(url) => {
             setAvatarUrl(url);
             updateProfile({ username, website, avatar_url: url });
           }}
-        />
+        /> */}
       </View>
       <View style={[styles.verticallySpaced, styles.mt20]}>
         <Input label="Email" value={email} disabled />
