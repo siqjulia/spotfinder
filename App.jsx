@@ -3,14 +3,32 @@ import { useState, useEffect } from 'react'
 import { supabase } from './supabase'
 import Auth from './components/Auth'
 import Account from './components/Account'
+import DashboardScreen from './screens/DashboardScreen'
 import { createStackNavigator } from '@react-navigation/stack'
 import { NavigationContainer } from '@react-navigation/native'
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs'
 
 const Stack = createStackNavigator()
+const Tab = createBottomTabNavigator()
+
+function Tabs({ userId, email}) {  /* Tutorial used for tab bar: https://reactnavigation.org/docs/bottom-tab-navigator/ */ 
+  return (
+    <Tab.Navigator>
+
+        <Tab.Screen name="Dashboard" component={DashboardScreen} />
+
+        <Tab.Screen name="Account"> 
+          {() => (
+            <Account key={userId} userId={userId} email={email} />
+        )}
+        </Tab.Screen>
+    </Tab.Navigator>
+  )
+}
 
 export default function App() {
-  const [userId, setUserId] = useState<string | null>(null)
-  const [email, setEmail] = useState<string | undefined>(undefined)
+  const [userId, setUserId] = useState(null)
+  const [email, setEmail] = useState(undefined)
 
   useEffect(() => {
     supabase.auth.getClaims().then(({ data: { claims } }) => {
@@ -34,16 +52,13 @@ export default function App() {
     })
   }, [])
 
-  return ( 
+  return ( /* Used ChatGPT on Lines 58-64 to help with integrating into my existing code and syntax errors */ 
       <NavigationContainer> 
           <Stack.Navigator>
             {userId ? (
-              <>
-              <Stack.Screen name="Dashboard" component={DashboardScreen} />
-              <Stack.Screen name="Account"> 
-                {() => <Account key={userId} userId={userId} email={email} />}
-              </Stack.Screen>
-              </>
+              <Stack.Screen name="Main" options= {{ headerShown: false}}>
+                {() => <Tabs userId={userId} email={email} />}
+                </Stack.Screen> 
             ) : (
               <Stack.Screen name="Login" component={Auth} />
             )}
@@ -51,26 +66,3 @@ export default function App() {
           </NavigationContainer>
   )
 }
-
-{/* 
-import { NavigationContainer } from '@react-navigation/native' //lines 1-14 from Claude
-import { createStackNavigator } from '@react-navigation/stack'
-import DashboardScreen from './screens/DashboardScreen'
-import Login from './screens/Login'
-
-const Stack = createStackNavigator()
-
-export default function App() { 
-  return (
-    <NavigationContainer>
-      <Stack.Navigator>
-        
-        <Stack.Screen name='Login' component={Login} />
-        <Stack.Screen name='Dashboard' component={DashboardScreen} />
-
-      </Stack.Navigator>
-    </NavigationContainer>
-  )
-} 
-
-*/} 
