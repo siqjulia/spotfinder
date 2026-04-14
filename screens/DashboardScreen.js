@@ -4,7 +4,7 @@ import { supabase } from "../supabase";
 import { userPosition } from "../hooks/userPosition";
 import { useNavigation } from "@react-navigation/native";
 import { Pressable } from "react-native"; 
-
+import Map from "../components/Map";
 
 
 export default function DashboardScreen() {
@@ -13,7 +13,9 @@ export default function DashboardScreen() {
   // console.log("position:", position);
   // JULIA: WHY IS THIS FUNCTION RUNNING EVERY SECOND?
 
-  useEffect(() => {
+  useEffect(() => {  
+    if (!position) return; 
+
     async function saveSpot() {
       try {
       console.log("running saveSpot", position);
@@ -33,7 +35,7 @@ export default function DashboardScreen() {
       }
     }
     saveSpot();
-  }, []);
+  }, [position]);
 
   return (
     // lines 26-38 are from Claude, they were handtyped and then copied from app.js to here.
@@ -50,6 +52,11 @@ export default function DashboardScreen() {
           ? `${position.lat}, ${position.lng}`
           : "Getting location..."}{" "}
       </Text>
+
+     <View style={{flex: 1}}>
+        <Map position={position} />
+     </View>     
+   
     </View>   
   );
 }

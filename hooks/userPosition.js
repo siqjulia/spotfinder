@@ -25,5 +25,5 @@ export function userPosition () { //entire function from Claude
     return position
 }
 
-
+export default userPosition; 
      

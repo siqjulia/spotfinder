@@ -7,6 +7,7 @@ import DashboardScreen from './screens/DashboardScreen'
 import { createStackNavigator } from '@react-navigation/stack'
 import { NavigationContainer } from '@react-navigation/native'
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs'
+import Map from './components/Map'
 
 const Stack = createStackNavigator()
 const Tab = createBottomTabNavigator()
