@@ -6,36 +6,37 @@ import { useNavigation } from "@react-navigation/native";
 import { Pressable } from "react-native"; 
 import Map from "../components/Map";
 
-
-export default function DashboardScreen() {
+export default function DashboardScreen({ route }) {
+  const userId = route?.params?.userId;
+  const email  = route?.params?.email;
   const position = userPosition();
   const navigation = useNavigation();
   // console.log("position:", position);
   // JULIA: WHY IS THIS FUNCTION RUNNING EVERY SECOND?
 
-  useEffect(() => {  
-    if (!position) return; 
-
     async function saveSpot() {
+      if (!position) { 
+      console.log("No position yet")
+      return; 
+    }
       try {
       console.log("running saveSpot", position);
-      // console.log("user", user);
+    
         const { error } = await supabase
           .from("savedlocation")
-          .update({
-            // username: "hello",
-            location: `POINT(${position.lat} ${position.lng})`,
+          .insert([
+            {
+            username: email,
+            user_id: userId, 
+            location: `SRID=4326;POINT(${position.lng} ${position.lat})`,
             updated: `now()`
-          })
-          .eq('id', 7)
-    
+          }
+        ]); 
         if (error) console.error(error);
       } catch (err) {
         console.log(err);
       }
     }
-    saveSpot();
-  }, [position]);
 
   return (
     // lines 26-38 are from Claude, they were handtyped and then copied from app.js to here.
@@ -60,6 +61,7 @@ export default function DashboardScreen() {
     </View>   
   );
 }
+
 
 const styles = StyleSheet.create({
   container: { flex: 1, padding: 20, marginTop: 60 },

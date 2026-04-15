@@ -17,7 +17,23 @@ if (!position) {
           lat: position.lat, 
           lng: position.lng
           }}
-        zoom ={13}
+        zoom ={20}
+        mapLayers={[
+          {
+            baseLayer:true,
+            url:"https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          },
+        ]}
+        mapMarkers= {[
+          {
+          position: {
+            lat: position.lat, 
+            lng: position.lng, 
+          },
+            icon: '📍', 
+            size: [32, 32],
+          }
+        ]}
       />
     </View>
   );

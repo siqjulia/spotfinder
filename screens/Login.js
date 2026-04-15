@@ -18,8 +18,11 @@ function Login() {
         supabase.auth.getClaims().then(({ data: { claims } }) => {
           setClaims(claims)
 
-          if (claims) { // Owen, should this be (claims === true)? 
-            navigation.replace('Dashboard') 
+          if (claims) { 
+            navigation.replace('Dashboard', {
+              userID: claims.sub, 
+              email: claims.email
+            }) 
           }
         })
       })
