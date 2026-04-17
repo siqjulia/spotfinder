@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { supabase } from "../supabase";
 import { userPosition } from "../hooks/userPosition";
@@ -30,7 +29,7 @@ export default function DashboardScreen({ route }) {
             user_id: userId, 
             location: `SRID=4326;POINT(${position.lng} ${position.lat})`,
             updated: `now()`
-          }
+          } 
         ]); 
         if (error) console.error(error);
       } catch (err) {

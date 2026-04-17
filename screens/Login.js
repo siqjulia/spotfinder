@@ -19,7 +19,7 @@ function Login() {
           setClaims(claims)
 
           if (claims) { 
-            navigation.replace('Dashboard', {
+              navigation.replace('Dashboard', { 
               userID: claims.sub, 
               email: claims.email
             }) 

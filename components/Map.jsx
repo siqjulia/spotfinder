@@ -4,10 +4,10 @@ import { View, Text } from 'react-native';
 import  userPosition from '../hooks/userPosition';
 
 export default function Map() { 
-  const position = userPosition(); 
+  let position = userPosition(); 
 
 if (!position) {
-  return <Text>Getting location!</Text>; 
+  // return <Text>Getting location!</Text>; 
 }
 
   return (
