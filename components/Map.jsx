@@ -2,11 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { LeafletView }  from 'react-native-leaflet-view';
 import { View, Text } from 'react-native';
 
-export default function Map({position}) { 
+export default function Map({position}) {
 
-if (!position) {
-  // return <Text>Getting location!</Text>; 
-}
+  if (!position) {
+    return <Text>Getting location!</Text>;
+  }
 
   return (
     <View style={{flex: 1}}>
