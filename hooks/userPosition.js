@@ -10,7 +10,7 @@ export function userPosition () { //entire function from Claude
             console.error('Location permission denied')
             return
           } 
-          await Location.getCurrentPositionAsync( 
+          await Location.getCurrentPositionAsync( //fix to what is was so this isn't null 
             { accuracy: Location.Accuracy.High },
             (loc) => { 
               setPosition ({

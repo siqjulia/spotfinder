@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { LeafletView }  from 'react-native-leaflet-view';
 import { View, Text } from 'react-native';
-import  userPosition from '../hooks/userPosition';
 
-export default function Map() { 
-  let position = userPosition(); 
+export default function Map({position}) { 
 
 if (!position) {
   // return <Text>Getting location!</Text>; 
