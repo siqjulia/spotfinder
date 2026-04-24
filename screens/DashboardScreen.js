@@ -41,17 +41,27 @@ export default function DashboardScreen({ route }) {
     // lines 26-38 are from Claude, they were handtyped and then copied from app.js to here.
     <View style={styles.container}>
 
-          <Pressable onPress={() => navigation.navigate("Login")}>
+          {/* <Pressable onPress={() => navigation.navigate("Login")}>
             <Text>Login</Text>
-          </Pressable>
-      
+          </Pressable> */}
+{/*       
       <Text>
         {" "}
         My location:{" "}
         {position
           ? `${position.lat}, ${position.lng}`
           : "Getting location..."}{" "}
-      </Text>
+      </Text> */}
+
+      <Pressable 
+        style={styles.saveButton} 
+        onPress={saveSpot}
+        disabled= {!position} // block of pressable from ChatGPT codex 
+        > 
+
+        <Text style={styles.saveButtonText}>Save My Location!</Text>
+      </Pressable>    
+
 
      <View style={{flex: 1}}>
         <Map position={position} />
@@ -64,4 +74,15 @@ export default function DashboardScreen({ route }) {
 
 const styles = StyleSheet.create({
   container: { flex: 1, padding: 20, marginTop: 60 },
+
+  saveButton: {
+    backgroundColor: "#ef4523",
+    alignItems: "center",
+    padding: 10, 
+    }, 
+
+    saveButtonText: { 
+      color: "white"
+    }, 
+    
 });

@@ -4,16 +4,19 @@ import { View, Text } from 'react-native';
 
 export default function Map({position}) {
 
-  if (!position) {
-    return <Text>Getting location!</Text>;
-  }
+  const defaultPosition = { 
+    lat: 35.500613,
+    lng: -80.842638, 
+  }; 
+
+const mapPosition = position || defaultPosition; 
 
   return (
     <View style={{flex: 1}}>
       <LeafletView
         mapCenterPosition={{
-          lat: position.lat, 
-          lng: position.lng
+          lat: mapPosition.lat, 
+          lng: mapPosition.lng
           }}
         zoom ={20}
         mapLayers={[
@@ -22,7 +25,9 @@ export default function Map({position}) {
             url:"https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           },
         ]}
-        mapMarkers= {[
+        mapMarkers= {
+        position
+         ? [ // this ?[ logic taught to me by ChatGPT codex
           {
           position: {
             lat: position.lat, 
@@ -30,8 +35,10 @@ export default function Map({position}) {
           },
             icon: '📍', 
             size: [32, 32],
-          }
-        ]}
+          },
+        ]
+      : []
+        }
       />
     </View>
   );
