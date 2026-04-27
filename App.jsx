@@ -13,14 +13,17 @@ import AccountScreen from "./screens/AccountScreen";
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
-function Tabs() {
+function Tabs({userId, email}) {
   /* Tutorial used for tab bar: https://reactnavigation.org/docs/bottom-tab-navigator/ */
   return (
     <Tab.Navigator>
-      <Tab.Screen name="Dashboard" component={DashboardScreen} />
+      <Tab.Screen 
+      name="Dashboard" 
+      component={DashboardScreen} 
+      initialParams={{userId, email}}
+      />
 
       <Tab.Screen name="AccountScreen" component ={AccountScreen}>
-        {/* {() => <Account key={userId} userId={userId} email={email} />} */}
       </Tab.Screen>
     </Tab.Navigator>
   );
