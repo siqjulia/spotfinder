@@ -8,23 +8,26 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Map from "./components/Map";
-import AccountScreen from "./screens/AccountScreen";
+import AllSpots from "./screens/AllSpots";
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
-function Tabs({userId, email}) {
+function Tabs({ userId, email }) {
   /* Tutorial used for tab bar: https://reactnavigation.org/docs/bottom-tab-navigator/ */
   return (
     <Tab.Navigator>
-      <Tab.Screen 
-      name="Dashboard" 
-      component={DashboardScreen} 
-      initialParams={{userId, email}}
+      <Tab.Screen
+        name="Dashboard"
+        component={DashboardScreen}
+        initialParams={{ userId, email }}
       />
 
-      <Tab.Screen name="AccountScreen" component ={AccountScreen}>
-      </Tab.Screen>
+      <Tab.Screen
+        name="All Spots"
+        component={AllSpots}
+        initialParams={{ userId, email }}
+      ></Tab.Screen>
     </Tab.Navigator>
   );
 }

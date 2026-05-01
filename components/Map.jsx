@@ -2,12 +2,37 @@ import React, { useEffect, useState } from 'react';
 import { LeafletView }  from 'react-native-leaflet-view';
 import { View, Text, StyleSheet } from 'react-native';
 
-export default function Map({position}) {
+export default function Map({position, markers = []}) {
 
   const defaultPosition = { 
     lat: 35.500613,
     lng: -80.842638, 
   }; 
+
+const currentPositionMarker = position 
+    ? [
+      {
+          position: {
+            lat: position.lat, 
+            lng: position.lng, 
+          },
+            icon: '📍', 
+            size: [32, 32],
+    },
+  ]
+  : []; 
+
+const savedMarkers = markers.map((spot, index) => ({
+    id: String(index), //this const SavedMarkers from Codex
+    position: {
+      lat: spot.lat, 
+      lng: spot.lng, 
+    },
+      icon: '📍', 
+      size: [32, 32],
+}));
+
+const allMarkers = [...currentPositionMarker, ...savedMarkers] // this line from Codex because I didn't know how to combine arrays 
 
 const mapPosition = position || defaultPosition; 
 
@@ -25,32 +50,12 @@ const mapPosition = position || defaultPosition;
             url:"https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           },
         ]}
-        mapMarkers= {
-        position
-         ? [ // this ?[ logic taught to me by ChatGPT codex
-          {
-          position: {
-            lat: position.lat, 
-            lng: position.lng, 
-          },
-            icon: '📍', 
-            size: [32, 32],
-          },
-          {
-            position: {
-              lat: position.lat + .001, //changes the lattitude slightly to move the pin, so you know there are two pins 
-              lng: position.lng, 
-            },
-              icon: '📍', 
-              size: [32, 32],
-            },
-        ] //populate saved locations from this array in a loop. select all from the table and populate the markers on the big map 
-      : []
-        }
+        mapMarkers = {allMarkers}
       />
     </View>
   );
 }
+
 
 const styles = StyleSheet.create({
 

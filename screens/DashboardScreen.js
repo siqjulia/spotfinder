@@ -33,6 +33,8 @@ export default function DashboardScreen({ route }) {
           user_id: userId,
           location: `SRID=4326;POINT(${position.lng} ${position.lat})`,
           updated: new Date().toISOString(), //from ChatGPT Codex
+          lat: position.lat,
+          lng: position.lng,
         },
       ]);
 
