@@ -2,12 +2,10 @@ import "react-native-url-polyfill/auto";
 import { useState, useEffect } from "react";
 import { supabase } from "./supabase";
 import Auth from "./components/Auth";
-import Account from "./components/Account";
 import DashboardScreen from "./screens/DashboardScreen";
 import { createStackNavigator } from "@react-navigation/stack";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import Map from "./components/Map";
 import AllSpots from "./screens/AllSpots";
 
 const Stack = createStackNavigator();

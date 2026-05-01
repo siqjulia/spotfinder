@@ -12,10 +12,8 @@ export default function AllSpots ({ route }) {
       if (!userId) return; 
 
       const { data, error } = await supabase
-  
           .from("savedlocation")
           .select("lat, lng, updated")
-          .eq("user_id", userId);
       
       if (error) {
         console.error(error);
@@ -29,7 +27,7 @@ export default function AllSpots ({ route }) {
 
     return ( 
       <View style={{ flex: 1 }}>
-        <Map marker={savedSpots} />
+        <Map markers={savedSpots} />
       </View>
     );
   }
