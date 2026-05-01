@@ -12,12 +12,9 @@ export default function DashboardScreen({ route }) {
   const position = userPosition();
 
   async function saveSpot() {
-    alert(
-      "Your spot has been saved. When you're ready, click the 'Map Back to my Spot!' button"
-    );
 
     if (!position) {
-      console.log("No position yet");
+      alert("Finding your location...");
       return;
     }
     try {
@@ -43,6 +40,7 @@ export default function DashboardScreen({ route }) {
         return;
       }
       setSavedSpot(position);
+      alert("Your spot has been saved! See you later.");
     } catch (err) {
       console.log(err);
     }
@@ -56,6 +54,7 @@ export default function DashboardScreen({ route }) {
 
     try {
       await Linking.openURL(url);
+      setSavedSpot(null);
     } catch (err) {
       console.log("Apple Maps fail", err);
     }
@@ -69,13 +68,21 @@ export default function DashboardScreen({ route }) {
       </View>
 
       <Pressable
-        style={[styles.saveButton, savedSpot && styles.mapButton]} 
+        style={[styles.saveButton, savedSpot && styles.mapButton]}
         onPress={savedSpot ? openAppleMaps : saveSpot}
-        disabled={!position} // block of pressable from ChatGPT codex
+        disabled={false} // block of pressable from ChatGPT codex
       >
         <Text style={styles.saveButtonText} pointerEvents="box-none">
           {savedSpot ? "Map Back to My Spot!" : "Save My Spot!"}
         </Text>
+      </Pressable>
+
+      <Pressable
+        style={styles.logOutButton}
+        pointerEvents="box-none"
+        onPress={() => supabase.auth.signOut()}
+      >
+        <Text style={styles.saveButtonText}>Sign Out</Text>
       </Pressable>
     </View>
   );
@@ -89,7 +96,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#6F7935",
   },
   saveButton: {
-    position: 'absolute',
+    position: "absolute",
     bottom: 20,
     right: 20,
     flexDirection: "row",
@@ -97,11 +104,11 @@ const styles = StyleSheet.create({
     backgroundColor: "#f23a2c",
     alignSelf: "center",
     padding: 15,
-    marginTop: 15, 
+    marginTop: 15,
     // marginBottom: 15,
     width: 200,
     borderRadius: 4,
-    zIndex: 10, 
+    zIndex: 10,
   },
 
   updateButton: {
@@ -121,6 +128,10 @@ const styles = StyleSheet.create({
   saveButtonText: {
     color: "white",
     fontSize: 16,
-    fontWeight: '600',
+    fontWeight: "600",
+  },
+
+  logOutButton: {
+   display: 'none',
   },
 });

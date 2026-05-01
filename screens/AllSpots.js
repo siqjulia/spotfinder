@@ -4,7 +4,7 @@ import { supabase } from "../supabase";
 import Map from "../components/Map";
 
 export default function AllSpots ({ route }) {
-  const [savedSpots, setSavedSpot] = useState(null);
+  const [savedSpots, setSavedSpot] = useState([]);
   const userId = route?.params?.userId;
 
   useEffect (() => {

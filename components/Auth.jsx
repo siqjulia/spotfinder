@@ -17,9 +17,9 @@ export default function Auth() {
     })
 
     if (error) { 
-      Alert.alert(error.message)
-      setLoading(false)
+      Alert.alert(error.message)  
   }
+    setLoading(false)
  }
 
   async function signUpWithEmail() {
