@@ -6,14 +6,15 @@ import Map from "../components/Map";
 import { useState } from "react";
 
 export default function DashboardScreen({ route }) {
-  const [savedSpot, setSavedSpot] = useState(null); 
+  const [savedSpot, setSavedSpot] = useState(null);
   const userId = route?.params?.userId;
   const email = route?.params?.email;
   const position = userPosition();
 
-
   async function saveSpot() {
-    alert("saveSpot Ran");
+    alert(
+      "Your spot has been saved. When you're ready, click the 'Map Back to my Spot!' button"
+    );
 
     if (!position) {
       console.log("No position yet");
@@ -36,61 +37,85 @@ export default function DashboardScreen({ route }) {
       ]);
 
       if (error) {
-      console.error(error);
-      return; 
-    }
-    setSavedSpot(position) 
-  } catch (err) {
+        console.error(error);
+        return;
+      }
+      setSavedSpot(position);
+    } catch (err) {
       console.log(err);
     }
   }
 
-  async function openAppleMaps() { // this openAppleMaps function is one that ChatGPT helped me develop 
-    if (!savedSpot) return; 
+  async function openAppleMaps() {
+    // this openAppleMaps function is one that ChatGPT helped me develop
+    if (!savedSpot) return;
 
-    const url = `http://maps.apple.com/?daddr=${savedSpot.lat},${savedSpot.lng}&dirflg=w`
+    const url = `http://maps.apple.com/?daddr=${savedSpot.lat},${savedSpot.lng}&dirflg=w`;
 
-    try { 
-      await Linking.openURL(url); 
-    } catch (err) { 
-        console.log("Apple Maps fail", err);
+    try {
+      await Linking.openURL(url);
+    } catch (err) {
+      console.log("Apple Maps fail", err);
     }
   }
 
   return (
     // lines 26-38 are from Claude, they were handtyped and then copied from app.js to here.
     <View style={styles.container}>
+      <View style={{ flex: 1 }}>
+        <Map position={position} />
+      </View>
+
       <Pressable
         style={[styles.saveButton, savedSpot && styles.mapButton]}
-        onPress={savedSpot ? openAppleMaps : saveSpot }
+        onPress={savedSpot ? openAppleMaps : saveSpot}
         disabled={!position} // block of pressable from ChatGPT codex
       >
         <Text style={styles.saveButtonText}>
           {savedSpot ? "Map Back to My Spot!" : "Save My Spot!"}
         </Text>
       </Pressable>
-
-      <View style={{ flex: 1 }}>
-        <Map position={position} />
-      </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, padding: 20, marginTop: 60 },
+  container: { flex: 1, padding: 20, marginTop: 20 },
 
+  container: {
+    flex: 1,
+    backgroundColor: "#6F7935",
+    padding: 12,
+  },
   saveButton: {
-    backgroundColor: "#ef4523",
-    alignItems: "center",
-    padding: 10,
+    flexDirection: "row",
+    justifyContent: "space-around",
+    backgroundColor: "#f23a2c",
+    alignSelf: "center",
+    padding: 15,
+    marginTop: 15,
+    marginBottom: 15,
+    width: 200,
+    borderRadius: 4,
   },
 
-  mapButton : { 
-    backgroundColor: "black", 
+  updateButton: {
+    flexDirection: "row",
+    justifyContent: "space-around",
+    alignItems: "center",
+    padding: 15,
+    marginBottom: 15,
+    borderRadius: 40,
+  },
+
+  mapButton: {
+    backgroundColor: "#1A1A1A",
+    borderRadius: 4,
   },
 
   saveButtonText: {
     color: "white",
+    fontSize: 16,
+    fontWeight: '600',
   },
 });

@@ -1,7 +1,7 @@
 //copied from https://supabase.com/docs/guides/auth/quickstarts/react-native
 
 import React, { useState } from 'react'
-import { Alert, StyleSheet, View, Text, TextInput, TouchableOpacity } from 'react-native'
+import { Alert, StyleSheet, View, Text, TextInput, TouchableOpacity, Image } from 'react-native'
 import { supabase } from '../supabase'
 
 export default function Auth() {
@@ -39,6 +39,7 @@ export default function Auth() {
 
   return (
     <View style={styles.container}>
+      <Image source={require('../assets/logo.png')} style={styles.logo} />
       <View style={[styles.verticallySpaced, styles.mt20]}>
         <Text style={styles.label}>Email</Text>
         <TextInput
@@ -62,16 +63,16 @@ export default function Auth() {
       </View>
       <View style={[styles.verticallySpaced, styles.mt20]}>
         <TouchableOpacity
-          style={[styles.button, loading && styles.buttonDisabled]}
+          style={[styles.button, styles.buttonRed,loading && styles.buttonDisabled]}
           onPress={() => signInWithEmail()}
           disabled={loading}
         >
           <Text style={styles.buttonText}>Sign in</Text>
         </TouchableOpacity>
       </View>
-      <View style={styles.verticallySpaced}>
+      <View>
         <TouchableOpacity
-          style={[styles.button, loading && styles.buttonDisabled]}
+          style={[styles.button, styles.buttonBlack, loading && styles.buttonDisabled]}
           onPress={() => signUpWithEmail()}
           disabled={loading}
         >
@@ -83,10 +84,13 @@ export default function Auth() {
 }
 
 const styles = StyleSheet.create({
+
   container: {
-    marginTop: 40,
+    flex: 1, 
+    backgroundColor: '#6F7935',
     padding: 12,
   },
+
   verticallySpaced: {
     paddingTop: 4,
     paddingBottom: 4,
@@ -98,22 +102,35 @@ const styles = StyleSheet.create({
   label: {
     fontSize: 16,
     fontWeight: '600',
-    color: '#86939e',
+    color: '#1A1A1A',
     marginBottom: 6,
   },
   input: {
     borderWidth: 1,
-    borderColor: '#86939e',
+    borderColor: 'black',
+    backgroundColor: '#FBF2C0',
     borderRadius: 4,
-    padding: 12,
+    padding: 15,
     fontSize: 16,
   },
   button: {
-    backgroundColor: '#2089dc',
     borderRadius: 4,
-    padding: 12,
+    padding: 15, 
+    margin: 4,
     alignItems: 'center',
+    alignSelf: 'center',
+    width: 250,
+    display: 'inline',
   },
+
+  buttonRed: { 
+    backgroundColor: '#f23a2c',
+  },
+
+  buttonBlack: { 
+    backgroundColor: '#1A1A1A',
+  },
+
   buttonDisabled: {
     opacity: 0.5,
   },
@@ -122,4 +139,11 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '600',
   },
+
+    logo: { 
+      marginTop: 50,
+      alignSelf: 'center',
+      width: 275, 
+      height: 250, 
+    },
 })
