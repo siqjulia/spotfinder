@@ -67,11 +67,11 @@ export default function DashboardScreen({ route }) {
       </View>
 
       <Pressable
-        style={[styles.saveButton, savedSpot && styles.mapButton]}
+        style={[styles.saveButton, savedSpot && styles.mapButton]} 
         onPress={savedSpot ? openAppleMaps : saveSpot}
         disabled={!position} // block of pressable from ChatGPT codex
       >
-        <Text style={styles.saveButtonText}>
+        <Text style={styles.saveButtonText} pointerEvents="box-none">
           {savedSpot ? "Map Back to My Spot!" : "Save My Spot!"}
         </Text>
       </Pressable>
@@ -85,18 +85,21 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#6F7935",
-    padding: 12,
   },
   saveButton: {
+    position: 'absolute',
+    bottom: 20,
+    right: 20,
     flexDirection: "row",
     justifyContent: "space-around",
     backgroundColor: "#f23a2c",
     alignSelf: "center",
     padding: 15,
-    marginTop: 15,
-    marginBottom: 15,
+    marginTop: 15, 
+    // marginBottom: 15,
     width: 200,
     borderRadius: 4,
+    zIndex: 10, 
   },
 
   updateButton: {

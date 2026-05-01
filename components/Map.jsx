@@ -38,7 +38,7 @@ const mapPosition = position || defaultPosition;
           },
           {
             position: {
-              lat: position.lat + .001, 
+              lat: position.lat + .001, //changes the lattitude slightly to move the pin, so you know there are two pins 
               lng: position.lng, 
             },
               icon: '📍', 
@@ -55,9 +55,8 @@ const mapPosition = position || defaultPosition;
 const styles = StyleSheet.create({
 
   container: { 
-    flex: 1, 
-    borderRadius: '5%', 
-    overflow: 'hidden',
+    flex: 1,  
+  
   },
 })
 
