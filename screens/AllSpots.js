@@ -2,10 +2,12 @@ import { useEffect, useState } from "react";
 import { View } from "react-native";
 import { supabase } from "../supabase";
 import Map from "../components/Map";
+import { userPosition } from "../hooks/userPosition";
 
 export default function AllSpots ({ route }) {
   const [savedSpots, setSavedSpot] = useState([]);
   const userId = route?.params?.userId;
+  const position = userPosition(); 
 
   useEffect (() => {
     async function loadAllSpots() { 
@@ -27,7 +29,7 @@ export default function AllSpots ({ route }) {
 
     return ( 
       <View style={{ flex: 1 }}>
-        <Map markers={savedSpots} />
+        <Map position = {position} markers={savedSpots} />
       </View>
     );
   }

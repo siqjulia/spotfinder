@@ -34,7 +34,7 @@ const savedMarkers = markers.map((spot, index) => ({
 
 const allMarkers = [...currentPositionMarker, ...savedMarkers] // this line from Codex because I didn't know how to combine arrays 
 
-const mapPosition = position || defaultPosition; 
+const mapPosition = position || markers[0] || defaultPosition; 
 
   return (
     <View style={styles.container}>
