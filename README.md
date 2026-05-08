@@ -1,1 +1,1 @@
-# spotfinder
+# Spot Finder
