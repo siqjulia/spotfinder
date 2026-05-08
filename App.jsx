@@ -7,6 +7,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import AllSpots from "./screens/AllSpots";
+import About from "./components/About";
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -24,6 +25,12 @@ function Tabs({ userId, email }) {
       <Tab.Screen
         name="All Spots"
         component={AllSpots}
+        initialParams={{ userId, email }}
+      ></Tab.Screen>
+
+<Tab.Screen
+        name="About"
+        component={About}
         initialParams={{ userId, email }}
       ></Tab.Screen>
     </Tab.Navigator>
